@@ -1,0 +1,14 @@
+/*
+sub_401720
+LoadMap
+sub_4017D0
+sub_401A50
+sub_401B80
+sub_401C20
+sub_401C50
+sub_401CE0
+sub_401EC0
+sub_401F30
+sub_402010
+sub_402390
+*/
