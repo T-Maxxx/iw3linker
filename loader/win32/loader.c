@@ -1,4 +1,5 @@
 #include "../loader.h"
+#include "../../src/database/db_stream_save.h"
 
 #define SET_JUMP(addr, target) \
 	do { \
@@ -77,6 +78,8 @@ static void patch_binary()
 {
 	/* Fix _fptrap bug */
 	SET_JUMP(0x004C6F4F, nullsub);
+	/* Fix VirtualAlloc calls. */
+	SET_JUMP(0x0044B270, DB_InitStream);
 }
 
 int load_original_binary()
