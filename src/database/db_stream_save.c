@@ -9,6 +9,15 @@
 
 void DB_InitStream()
 {
+    byte_t *memory = VirtualAlloc(0, 0x18000000 + 0x14000000 + 0x8000000, MEM_RESERVE, PAGE_READWRITE);
+    if (memory)
+    {
+        g_streamOutMemory = memory;
+        g_streamMemory = g_streamOutMemory + 0x18000000;
+        g_tempStreamMemory = g_streamMemory + 0x14000000;
+        return;
+    }
+    
     g_streamOutMemory = VirtualAlloc(0, 0x18000000, MEM_RESERVE, PAGE_READWRITE);
     BOOL_ASSERT(
         g_streamOutMemory,
