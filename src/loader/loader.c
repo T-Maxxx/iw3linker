@@ -1,5 +1,5 @@
-#include "../loader.h"
-#include "../../src/database/db_stream_save.h"
+#include "loader.h"
+#include "../database/db_stream_save.h"
 
 #define SET_JUMP(addr, target) \
     do { \
@@ -73,8 +73,6 @@ static void protect_segments()
     VirtualProtect(LINKERPC_DATA, LINKERPC_DATA_SIZE_F, PAGE_EXECUTE_READWRITE,
                    &oldProtect);
 }
-
-static void nullsub(){}
 
 static void patch_binary()
 {

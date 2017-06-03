@@ -5,3 +5,4 @@ iw3linker_src.includes
 iw3linker_src.creator.user
 .vscode/*
 .vscode2/*
+*.o
