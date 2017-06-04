@@ -26,28 +26,28 @@ static void unprotect_segments()
     VirtualProtect(
         GetOriginalSegmentLocation_text(),
         GetOriginalSegmentSize_text(),
-        PAGE_READWRITE,
+        PAGE_EXECUTE_READWRITE,
         &oldProtect
     );
     // .rdata
     VirtualProtect(
         GetOriginalSegmentLocation_rdata(),
         GetOriginalSegmentSize_rdata(),
-        PAGE_READWRITE,
+        PAGE_EXECUTE_READWRITE,
         &oldProtect
     );
     // .data
     VirtualProtect(
         GetOriginalSegmentLocation_data(),
         GetOriginalSegmentFullSize_data(),
-        PAGE_READWRITE,
+        PAGE_EXECUTE_READWRITE,
         &oldProtect
     );
     // .idata
     VirtualProtect(
         GetOriginalSegmentLocation_idata(),
         GetOriginalSegmentSize_idata(),
-        PAGE_READWRITE,
+        PAGE_EXECUTE_READWRITE,
         &oldProtect
     );
 }
@@ -63,7 +63,7 @@ static void copy_segments()
     memcpy(GetOriginalSegmentLocation_rdata(), GetOriginalSegmentData_rdata(), GetOriginalSegmentSize_rdata());
     
     // .data
-    memset(GetOriginalSegmentLocation_data(), 0, GetOriginalSegmentSize_data());
+    memset(GetOriginalSegmentLocation_data(), 0, GetOriginalSegmentFullSize_data());
     memcpy(GetOriginalSegmentLocation_data(), GetOriginalSegmentData_data(), GetOriginalSegmentSize_data());
 }
 
@@ -97,12 +97,20 @@ static void update_imports_table()
 
 static void protect_segments()
 {
+    // Order is critical
     DWORD oldProtect;
     // .text
     VirtualProtect(
         GetOriginalSegmentLocation_text(),
         GetOriginalSegmentSize_text(),
         PAGE_EXECUTE_READ,
+        &oldProtect
+    );
+    // .idata
+    VirtualProtect(
+        GetOriginalSegmentLocation_idata(),
+        GetOriginalSegmentSize_idata(),
+        PAGE_READONLY,
         &oldProtect
     );
     // .rdata
@@ -116,14 +124,7 @@ static void protect_segments()
     VirtualProtect(
         GetOriginalSegmentLocation_data(),
         GetOriginalSegmentFullSize_data(),
-        PAGE_READWRITE, // PAGE_EXECUTE_READWRITE
-        &oldProtect
-    );
-    // .idata
-    VirtualProtect(
-        GetOriginalSegmentLocation_idata(),
-        GetOriginalSegmentSize_idata(),
-        PAGE_READONLY,
+        PAGE_EXECUTE_READWRITE,
         &oldProtect
     );
 }
