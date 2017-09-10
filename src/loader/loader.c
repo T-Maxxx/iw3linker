@@ -8,6 +8,7 @@
 #include "linkerpc_idata.h"
 
 #include "../database/db_stream_save.h"
+#include "../database/db_stream.h"
 
 #define LINKERPC_ENTRY_POINT (0x004B79A0)
 
@@ -133,6 +134,17 @@ static void patch_binary()
     _fpmath(1);
     /* Fix VirtualAlloc calls. */
     SET_JUMP(0x0044B270, DB_InitStream);
+    // iss #4
+    SET_JUMP(0x0044ABD0, DB_WriteDataToStream);
+    SET_JUMP(0x0044AB00, DB_InitStreamOut);
+    SET_JUMP(0x0044AB80, DB_FreeStreamOut);
+    SET_JUMP(0x0044AD80, DB_ProcessDelayedStream);
+    SET_JUMP(0x0044AFF0, DB_GetSourcePos);
+    SET_JUMP(0x0049EE80, DB_IncreaseStreamPos);
+    SET_JUMP(0x0049EE50, DB_GetStreamPos);
+    SET_JUMP(0x0044AEA0, DB_IncreaseSourcePos);
+    SET_JUMP(0x0044B000, DB_GetStreamOut);
+    SET_JUMP(0x0044B010, DB_GetStreamOutOffset);
 }
 
 static entry_point_t get_entry_point()

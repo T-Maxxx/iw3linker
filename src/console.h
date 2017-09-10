@@ -1,5 +1,9 @@
 #pragma once
+#include <alldecompiled.h>
 
-extern void (*Com_Assertf)(const char *file_path, const int line, int unknown, const char *text, ...);
+//#define QASSERT_GENERAL(expr, msg, fmt, ...) if ()
 
-#define BOOL_ASSERT(expression, text, ... ) if (!(expression)) Com_Assertf(__FILE__,__LINE__,0,(text),__VA_ARGS__);
+#define QASSERT(expr) if (!(expr)) Com_Assertf(__FILE__, __LINE__, 0, "%s\n", #expr)
+#define QASSERTMSG(expr, msg) if (!(expr)) Com_Assertf(__FILE__, __LINE__, 0, "%s\n" msg, #expr)
+#define QASSERTF(expr, fmt, ...) if (!(expr)) Com_Assertf(__FILE__, __LINE__, 0, "%s\n" fmt, #expr, __VA_ARGS__)
+
