@@ -9,7 +9,7 @@
 
 void DB_InitStream()
 {
-    byte_t *memory = VirtualAlloc(0, 0x18000000 + 0x14000000 + 0x8000000, MEM_RESERVE, PAGE_READWRITE);
+    byte_t *memory = static_cast<byte_t*>(VirtualAlloc(nullptr, 0x18000000 + 0x14000000 + 0x8000000, MEM_RESERVE, PAGE_READWRITE));
     if (memory)
     {
         g_streamOutMemory = memory;
@@ -18,7 +18,7 @@ void DB_InitStream()
         return;
     }
     
-    g_streamOutMemory = VirtualAlloc(0, 0x18000000, MEM_RESERVE, PAGE_READWRITE);
+    g_streamOutMemory = static_cast<byte_t*>(VirtualAlloc(nullptr, 0x18000000, MEM_RESERVE, PAGE_READWRITE));
     BOOL_ASSERT(
         g_streamOutMemory,
         "%s\n%s",
@@ -27,7 +27,7 @@ void DB_InitStream()
         GetLastError()
     );
 
-    g_streamMemory = VirtualAlloc(0, 0x14000000, MEM_RESERVE, PAGE_READWRITE);
+    g_streamMemory = static_cast<byte_t*>(VirtualAlloc(nullptr, 0x14000000, MEM_RESERVE, PAGE_READWRITE));
     BOOL_ASSERT(
         g_streamMemory,
         "%s\n%s\nGetLastError() = %d",
@@ -36,7 +36,7 @@ void DB_InitStream()
         GetLastError()
     );
 
-    g_tempStreamMemory =  VirtualAlloc(0, 0x8000000, MEM_RESERVE, PAGE_READWRITE);
+    g_tempStreamMemory = static_cast<byte_t*>(VirtualAlloc(nullptr, 0x8000000, MEM_RESERVE, PAGE_READWRITE));
     BOOL_ASSERT(
         g_tempStreamMemory,
         "%s\n%s\nGetLastError() = %d",

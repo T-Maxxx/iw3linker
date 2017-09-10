@@ -10,13 +10,13 @@
 #define LINKERPC_IDATA        (0x004D1000)
 #define LINKERPC_IDATA_SIZE   (0x000D0000)
 
-static char* g_impADVAPI32[] = {
+static const char* g_impADVAPI32[] = {
     "CryptReleaseContext",
     "CryptGenRandom",
     "CryptAcquireContextA"
 };
 
-static char* g_impKERNEL32[] = {
+static const char* g_impKERNEL32[] = {
     "SetConsoleMode",
     "ReadConsoleInputA",
     "GetConsoleScreenBufferInfo",
@@ -121,7 +121,7 @@ static char* g_impKERNEL32[] = {
     "SetEnvironmentVariableA"
 };
 
-static char* g_impUSER32[] = {
+static const char* g_impUSER32[] = {
     "GetDesktopWindow",
     "MessageBoxA",
     "GetActiveWindow",
@@ -131,23 +131,22 @@ static char* g_impUSER32[] = {
     "OpenClipboard"
 };
 
-static char* g_impWINMM[] = {
+static const char* g_impWINMM[] = {
     "timeGetTime"
 };
 
-static char* g_impD3DX9_34[] = {
+static const char* g_impD3DX9_34[] = {
     "D3DXGetShaderOutputSemantics",
     "D3DXCreateBuffer",
     "D3DXGetShaderInputSemantics",
     "D3DXGetShaderConstantTable"
 };
 
-static char* g_impMSS32[] = {
+static const char* g_impMSS32[] = {
     "_AIL_WAV_info@8"
 };
 
-static import_info_t g_importsData[6] =
-{
+static const SImportInfo g_importsData[6] ={
     {
         "ADVAPI32.dll",
         IMPORTS_ADVAPI32_ADDR,
@@ -186,7 +185,7 @@ static import_info_t g_importsData[6] =
     }
 };
 
-import_info_t* GetImportsData()
+const SImportInfo* GetImportsData()
 {
     return g_importsData;
 }

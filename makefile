@@ -3,8 +3,8 @@ rwildcard=$(strip $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,
 #########################
 TARGET=linker_pc.exe
 #########################
-CC=gcc
-CFLAGS=-c -m32 -O2 -Wall
+CC=g++
+CFLAGS=-c -m32 -O2 -Wall -std=c++11
 LFLAGS=-Wl,--image-base,0x400000 -Tsrc/loader/linker_pc.ld
 #########################
 TARGETDIR=bin

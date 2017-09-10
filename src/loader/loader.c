@@ -69,13 +69,11 @@ static void copy_segments()
 
 static void update_imports_table()
 {
-    int i = 0;
-    int j = 0;
     HMODULE lib = 0;
     FARPROC* ptr = NULL;
-    import_info_t* imports = GetImportsData();
+    const SImportInfo* imports = GetImportsData();
 
-    for(i = 0; i < GetImportsCount(); ++i)
+    for(uint_t i = 0; i < GetImportsCount(); ++i)
     {
         lib = LoadLibraryA(imports[i].libName);
 
@@ -83,7 +81,7 @@ static void update_imports_table()
             exit(1);
 
         ptr = (FARPROC*)imports[i].startAddress;
-        for(j = 0; j < imports[i].functionsCount; ++j)
+        for(int j = 0; j < imports[i].functionsCount; ++j)
         {
             ptr[j] = GetProcAddress(lib, imports[i].functions[j]);
             if(ptr[j] == 0)
